@@ -1,7 +1,9 @@
 # peewee教程-python另类orm
 ## 一、实验介绍
 ### 1.1 实验内容
-【对整个实验内容的概括介绍】
+
+创建一个博客应用所需要的数据表，并介绍了使用 SQLAlchemy 进行简单了 CURD 操作及使用 Faker 生成测试数据
+
 ### 1.2 实验知识点 
 + 学会用 peewee 连接数据库(MySQL, SQLite, PostgreSQL), 创建数据表；
 + 掌握表数据之间一对一，一对多及多对多的关系并能转化为对应 peewee 描述；
@@ -18,6 +20,14 @@ python 初学者
 
 ### 1.5 代码获取
 
+```
+
+git clone git@github.com:uxlsl/peewee_learn.git
+
+
+```
+
+
 ## 二、实验原理
 
 ### ORM 与 peewee 简介
@@ -32,7 +42,8 @@ peewee 是一个简单，小的ORM, 它只有很少概念, 容易学习与使用
 
 ## 三、开发准备
 
-安装peewee, 由于使用最新的peewee，pypi目前不是最新版本, 所以安装最新版的peewee, 使用pip git+
+安装peewee, 由于使用最新的peewee，pypi目前不是最新版本,
+所以安装最新版的peewee, 使用pip git+ 安装
 
 
 ```
@@ -42,11 +53,12 @@ peewee 是一个简单，小的ORM, 它只有很少概念, 容易学习与使用
 
 ```
 
-## 四、项目文件结构
-
-## 五、实验步骤
+## 四、实验步骤
 
 ### 连接数据库
+
+目前先使用 sqlite 数据库，实验
+
 
 ```
 
@@ -59,11 +71,10 @@ database.connect()
 ```
 
 ### 描述表结构
+与django orm sqlalchemy差不多
+
 
 ```
-
-
-database = SqliteDatabase('blog.db')
 
 
 class BaseModel(Model):
@@ -83,6 +94,7 @@ class User(BaseModel):
 
 ### 建表
 
+使用database的create_tables方法
 
 ```
 
@@ -240,13 +252,23 @@ Out[25]: 'bar123@qq.com'
 ```
 
 #### retrieve
+可以使用model多种方法
+
++ User.get(username='XXX') 拿一个
++ User.select().where(User.username = 'XXX') 返回迗代子
++ User.filter(username='XXX') 返回迗代子
+
 
 ```
 
-In [24]: bar =User.get(username='bar')
+In [41]: User.get(username='bar')
+Out[41]: User('bar')
 
-In [25]: bar.email
-Out[25]: 'bar123@qq.com'
+In [42]: list(User.select().where(User.username=='bar'))
+Out[42]: [User('bar')]
+
+In [43]: list(User.filter(username='bar'))
+Out[43]: [User('bar')]
 
 ```
 
@@ -254,23 +276,19 @@ Out[25]: 'bar123@qq.com'
 
 ```
 
-In [26]: bar.delete_instance()
-Out[26]: 1
+In [24]: bar = User.create(username='bar', password='123456', email='bar@qq.com')
 
-In [27]: User.get(username='bar')
----------------------------------------------------------------------------
-IndexError                                Traceback (most recent call last)
-~/.virtualenvs/hello/lib/python3.6/site-packages/peewee.py in get(self)
-   5379         try:
--> 5380             return clone.execute()[0]
-   5381         except IndexError:
+In [25]: bar
+Out[25]: User('bar')
 
-~/.virtualenvs/hello/lib/python3.6/site-packages/peewee.py in __getitem__(self, item)
-   3322             self.fill_cache(item if item > 0 else 0)
--> 3323             return self.row_cache[item]
-   3324         else:
+In [26]: list(User.select())
+Out[26]: [User('bar')]
 
-IndexError: list index out of range
+In [27]: bar.delete_instance()
+Out[27]: 1
+
+In [28]: list(User.select())
+Out[28]: []
 
 ```
 可以看到已经查不到了!
