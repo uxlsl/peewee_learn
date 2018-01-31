@@ -285,5 +285,7 @@ IndexError: list index out of range
 
 ## 八、参考链接
 
-[SQLAlchemy 基础教程](https://www.shiyanlou.com/courses/724/labs/2382/document)
-[peewee 3.0.6 documentation](http://docs.peewee-orm.com/en/latest/)
+
++ [SQLAlchemy 基础教程](https://www.shiyanlou.com/courses/724/labs/2382/document)
+
++ [peewee 3.0.6 documentation](http://docs.peewee-orm.com/en/latest/)
