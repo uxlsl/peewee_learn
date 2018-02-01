@@ -60,7 +60,7 @@ peewee 是一个简单，小的ORM, 它只有很少概念, 容易学习与使用
 目前先使用 sqlite 数据库，实验
 
 
-```
+``` python
 
 from peewee import *
 
@@ -74,7 +74,7 @@ database.connect()
 与django orm sqlalchemy差不多
 
 
-```
+``` python
 
 
 class BaseModel(Model):
@@ -96,7 +96,7 @@ class User(BaseModel):
 
 使用database的create_tables方法
 
-```
+``` python
 
 database.connect()
 database.create_tables([User])
@@ -107,7 +107,7 @@ database.create_tables([User])
 
 对于一个普通的博客应用来说，用户和文章显然是一个一对多的关系，一篇文章属于一个用户，一个用户可以写很多篇文章，那么他们之间的关系可以这样定义：
 
-```
+``` python
 
 from peewee import *
 
@@ -142,7 +142,7 @@ class Article(BaseModel):
 对于一个普通的博客应用来说，用户和文章显然是一个一对多的关系，一篇文章属于一个用户，一个用户可以写很多篇文章，那么他们之间的关系可以这样定义：
 
 
-```
+``` python
 
 
     author =  ForeignKeyField(User, backref='articles')
@@ -154,7 +154,7 @@ class Article(BaseModel):
 可以直接使用peewee， ManyToManyField
 
 
-```
+``` python
 
     tags = ManyToManyField(Tag, backref='articles')
 
@@ -163,7 +163,7 @@ class Article(BaseModel):
 
 ### 建表
 
-```
+``` python
 
     database.connect()
     database.create_tables([User, UserInfo,
@@ -176,7 +176,7 @@ class Article(BaseModel):
 ### 简单操作
 #### 插入一些测试数据
 
-```
+``` python
 
     database.connect()
     database.create_tables([User, UserInfo,
@@ -291,6 +291,7 @@ In [28]: list(User.select())
 Out[28]: []
 
 ```
+
 可以看到已经查不到了!
 
 
@@ -299,7 +300,8 @@ Out[28]: []
 
 ## 七、课后习题
 
-查看peewee的文档，学习更高级的查询,插入的方法.
++ 学习peewee更高级的查询,插入的方法
++ 学习peewee扩展模块playhouse的使用
 
 ## 八、参考链接
 
